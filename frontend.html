@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Description App</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; text-align: center; }
+        input[type="file"] { margin: 20px; }
+        #result { margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <h1>Upload an Image for Description</h1>
+    <input type="file" id="imageInput" />
+    <button onclick="uploadImage()">Submit</button>
+    <div id="result"></div>
+    <script>
+        async function uploadImage() {
+            const input = document.getElementById('imageInput');
+            if (input.files.length === 0) {
+                alert('Please upload an image!');
+                return;
+            }
+            const formData = new FormData();
+            formData.append('image', input.files[0]);
+
+            const response = await fetch('http://127.0.0.1:5000/upload', {
+                method: 'POST',
+                body: formData,
+            });
+            const result = await response.json();
+            const resultDiv = document.getElementById('result');
+            if (result.error) {
+                resultDiv.innerHTML = `<p style="color:red;">Error: ${result.error}</p>`;
+            } else {
+                resultDiv.innerHTML = `<h3>Predictions:</h3>${result.description.map(d => `<p>${d.label} (${d.probability.toFixed(2)})</p>`).join('')}`;
+            }
+        }
+    </script>
+</body>
+</html>
