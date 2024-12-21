@@ -84,8 +84,3 @@ This repository contains a simple web application that allows users to upload an
 - Add multilingual support for descriptions.
 - Enhance frontend design using a modern framework (e.g., React, Vue).
 - Optimize backend with more advanced pre-trained models (e.g., CLIP by OpenAI).
-
----
-
-## License
-This project is licensed under the MIT License. See `LICENSE` for details.
